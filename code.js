@@ -1,4 +1,5 @@
 function tspHK(distanceMatrix) {
+    let minDistance = Infinity;
     if (distanceMatrix = [[]]) {
         minDistance == 0;
     }
@@ -12,7 +13,6 @@ function tspHK(distanceMatrix) {
           if (memo[visited][pos] !== -1) {
             return memo[visited][pos];
           }
-          let minDistance = Infinity;
           for (let next = 0; next < n; next++) {
             const nextCityBit = 2 ** next;
             if ((visited & nextCityBit) === 0) {
