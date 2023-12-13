@@ -1,5 +1,5 @@
 function tspHK(distanceMatrix) {
-    if distanceMatrix = [[]] {
+    if (distanceMatrix = [[]]) {
         minDistance == 0;
     }
     else {
