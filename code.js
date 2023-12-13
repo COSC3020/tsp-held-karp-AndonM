@@ -1,5 +1,4 @@
 function tspHK(distanceMatrix) {
-    let distanceMatrix = [[]];
     const n = distanceMatrix.length;
     const memo = new Array(2 ** n).fill().map(() => new Array(n).fill(-1));
     function heldKarp(visited, pos) {
