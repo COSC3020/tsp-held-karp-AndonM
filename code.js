@@ -1,30 +1,36 @@
 function tspHK(distanceMatrix) {
-    let minDistance = Infinity;
     if (distanceMatrix.length <= 1) {
         return 0;
     }
-    else {
-        const n = distanceMatrix.length;
-        const memo = new Array(2 ** n).fill().map(() => new Array(n).fill(-1));
-        function heldKarp(visited, pos) {
-          if (visited === (2 ** n) - 1) {
-            return distanceMatrix[pos][0];
-          }
-          if (memo[visited][pos] !== -1) {
-            return memo[visited][pos];
-          }
-          for (let next = 0; next < n; next++) {
-            const nextCityBit = 2 ** next;
-            if ((visited & nextCityBit) === 0) {
-              const newVisited = visited | nextCityBit;
-              const newDistance =
-                distanceMatrix[pos][next] + heldKarp(newVisited, next);
-                minDistance = Math.min(minDistance, newDistance);
-                }
-              }
-              memo[visited][pos] = minDistance;
-              return minDistance;
+    const memo = {};
+    function heldKarp(visited, pos) {
+        let key = JSON.stringify([visited, pos]);
+        if (memo[key] !== undefined) {
+            return memo[key];
         }
-        return heldKarp(1, 0);
+        if (visited.length === 2) {
+            memo[key] = distanceMatrix[visited[0]][visited[1]];
+            return memo[key];
+        } 
+        else {
+            let minimum = Infinity;
+            for (let i = 0; i < visited.length; i++) {
+                let nextCity = visited[i];
+                if (nextCity !== pos) {
+                    let newVisited = visited.filter(city => city !== pos);
+                    let newMin = heldKarp(newVisited, nextCity) + distanceMatrix[pos][nextCity];
+                    minimum = Math.min(minimum, newMin);
+                }
+            }
+            memo[key] = minimum;
+            return minimum;
+        }
     }
+    let cities = Array.from({ length: distanceMatrix.length }, (_, i) => i);
+    let minTourLength = Infinity;
+    for (let start = 1; start < cities.length; start++) {
+        let tourLength = heldKarp([...cities], start) + distanceMatrix[0][start];
+        minTourLength = Math.min(minTourLength, tourLength);
+    }
+    return minTourLength === Infinity ? 0 : minTourLength;
 }
