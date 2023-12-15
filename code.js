@@ -1,7 +1,7 @@
 function tspHK(distanceMatrix) {
     let minDistance = Infinity;
-    if (distanceMatrix = [[]]) {
-        minDistance == 0;
+    if (distanceMatrix.length <= 1) {
+        return 0;
     }
     else {
         const n = distanceMatrix.length;
