@@ -11,8 +11,7 @@ function tspHK(distanceMatrix) {
         if (visited.length === 2) {
             memo[key] = distanceMatrix[visited[0]][visited[1]];
             return memo[key];
-        } 
-        else {
+        } else {
             let minimum = Infinity;
             for (let i = 0; i < visited.length; i++) {
                 let nextCity = visited[i];
@@ -29,7 +28,7 @@ function tspHK(distanceMatrix) {
     let cities = Array.from({ length: distanceMatrix.length }, (_, i) => i);
     let minTourLength = Infinity;
     for (let start = 1; start < cities.length; start++) {
-        let tourLength = heldKarp([...cities], start) + distanceMatrix[0][start];
+        let tourLength = heldKarp([...cities], start) + distanceMatrix[start][0];
         minTourLength = Math.min(minTourLength, tourLength);
     }
     return minTourLength === Infinity ? 0 : minTourLength;
